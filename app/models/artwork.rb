@@ -8,6 +8,7 @@
 #  artist_id  :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  favorite   :boolean
 #
 
 class Artwork < ApplicationRecord
@@ -37,7 +38,7 @@ class Artwork < ApplicationRecord
     through: :likes,
     source: :user
 
-  has_many :collections,
+  has_many :collection_items,
     foreign_key: :artwork_id,
-    class_name: 'Collection'
+    class_name: 'CollectionItem'
 end

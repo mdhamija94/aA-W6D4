@@ -42,9 +42,9 @@ class User < ApplicationRecord
 
   has_many :collection_items,
     foreign_key: :owner_id,
-    class_name: 'Collection'
+    class_name: 'CollectionItem'
 
   def collections
-    Collection.where("owner_id = #{self.id}").group("collections.name").pluck("name")
+    CollectionItem.where("owner_id = #{self.id}").group("collection_name").pluck("collection_name")
   end
 end

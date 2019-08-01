@@ -37,14 +37,14 @@ ActiveRecord::Schema.define(version: 2019_08_01_215707) do
     t.index ["artist_id"], name: "index_artworks_on_artist_id"
   end
 
-  create_table "collections", force: :cascade do |t|
-    t.string "name", null: false
+  create_table "collection_items", force: :cascade do |t|
+    t.string "collection_name", null: false
     t.integer "owner_id", null: false
     t.integer "artwork_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["artwork_id"], name: "index_collections_on_artwork_id"
-    t.index ["owner_id"], name: "index_collections_on_owner_id"
+    t.index ["artwork_id"], name: "index_collection_items_on_artwork_id"
+    t.index ["owner_id"], name: "index_collection_items_on_owner_id"
   end
 
   create_table "comments", force: :cascade do |t|
