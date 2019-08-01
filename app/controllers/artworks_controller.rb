@@ -38,6 +38,31 @@ class ArtworksController < ApplicationController
     end
   end
 
+  def favorite
+    user_id = params[:user_id]
+    artwork_id = params[:id]
+    mine = Artwork.find(artwork_id).artist_id == user_id.to_i
+    if mine
+      debugger
+      artwork = Artwork.find(artwork_id)
+      artwork.favorite = true 
+      artwork.save!
+    else
+      debugger
+      artwork_share = ArtworkShare.where( "viewer_id = #{user_id} and artwork_id = #{artwork_id}" ).first
+      if artwork_share.nil?
+        render plain: "Wrong stuff"
+      else
+        artwork_share.favorite = true
+        artwork_share.save!
+        debugger
+        render plain: "Favoriteed"
+      end
+
+      # debugger
+    end
+  end
+
   private
 
   def artwork_params

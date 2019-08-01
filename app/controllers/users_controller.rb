@@ -1,8 +1,12 @@
 class UsersController < ApplicationController
   def index 
-    users = User.all
-
-    render json: users
+    if params.has_key?(:query)
+      query = params[:query]
+      render json: User.where('username LIKE ?', "%#{query}%")
+    else
+      users = User.all
+      render json: users
+    end
   end
 
   def create
@@ -35,6 +39,17 @@ class UsersController < ApplicationController
     else
       render json: user.errors.full_messages, status: :unprocessable_entity
     end
+  end
+
+  def owner_favorites
+    debugger
+    artworks = User.find(params[:id]).artworks.where("favorite = true")
+    render json: artworks
+  end
+
+  def shared_favorites
+    artworks = ArtworkShare.where("favorite = true and viewer_id = #{params[:id]}")
+    render json: artworks
   end
 
   private

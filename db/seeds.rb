@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+Comment.delete_all
 ArtworkShare.delete_all
 Artwork.delete_all
 User.delete_all
@@ -27,3 +27,9 @@ ArtworkShare.create({viewer_id: User.fourth.id, artwork_id: Artwork.first.id})
 ArtworkShare.create({viewer_id: User.third.id, artwork_id: Artwork.fifth.id})
 ArtworkShare.create({viewer_id: User.fourth.id, artwork_id: Artwork.fifth.id})
 ArtworkShare.create({viewer_id: User.first.id, artwork_id: Artwork.third.id})
+
+Comment.create( { author_id: User.third.id, artwork_id: Artwork.first.id , body: 'first comment' } )
+Comment.create( { author_id: User.first.id, artwork_id: Artwork.second.id, body: 'second comment' } )
+Comment.create( { author_id: User.second.id, artwork_id: Artwork.fifth.id, body: 'third comment' } )
+Comment.create( { author_id: User.third.id, artwork_id: Artwork.second.id, body: 'fourth comment' } )
+Comment.create( { author_id: User.second.id, artwork_id: Artwork.fifth.id, body: 'last comment' } )

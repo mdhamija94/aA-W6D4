@@ -22,4 +22,29 @@ class User < ApplicationRecord
   has_many :shared_artworks,
     through: :artworks_shares,
     source: :artwork
+
+  has_many :comments,
+    foreign_key: :author_id,
+    class_name: :Comment,
+    dependent: :destroy
+
+  has_many :liked_comments,
+    through: :comments,
+    source: :likes
+
+  has_many :liked_artworks,
+    through: :artworks,
+    source: :likes
+
+  has_many :likes,
+    foreign_key: :user_id,
+    class_name: :Like
+
+  has_many :collection_items,
+    foreign_key: :owner_id,
+    class_name: 'Collection'
+
+  def collections
+    Collection.where("owner_id = #{self.id}").group("collections.name").pluck("name")
+  end
 end
