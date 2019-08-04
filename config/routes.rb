@@ -8,10 +8,10 @@ Rails.application.routes.draw do
     resources :artworks, only:[:index]
     resources :comments, only:[:index]
     member do 
-      get 'owner_favorites'
+      get 'favorites_from_collection'
     end
     member do
-      get 'shared_favorites'
+      get 'favorites_viewed'
     end
   end
   

@@ -1,12 +1,13 @@
 class ArtworksController < ApplicationController
-  def index 
-    # debugger
+  def index
     user = User.find(params[:user_id])
+    
     render json: user.artworks
   end
 
   def create
     artwork = Artwork.new(artwork_params)
+
     if artwork.save
       render json: artwork
     else
@@ -42,24 +43,21 @@ class ArtworksController < ApplicationController
     user_id = params[:user_id]
     artwork_id = params[:id]
     mine = Artwork.find(artwork_id).artist_id == user_id.to_i
+
     if mine
-      debugger
       artwork = Artwork.find(artwork_id)
       artwork.favorite = true 
       artwork.save!
     else
-      debugger
       artwork_share = ArtworkShare.where( "viewer_id = #{user_id} and artwork_id = #{artwork_id}" ).first
-      if artwork_share.nil?
-        render plain: "Wrong stuff"
-      else
+
+      if artwork_share
         artwork_share.favorite = true
         artwork_share.save!
-        debugger
-        render plain: "Favoriteed"
+        render plain: "Favorited!"
+      else
+        render plain: "Wrong stuff"
       end
-
-      # debugger
     end
   end
 
